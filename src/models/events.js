@@ -11,7 +11,7 @@ const eventSchema = new mongoose.Schema({
     required: false,
   },
   image: {
-    type: Buffer,
+    type: String,
     required: false,
   },
   date: {

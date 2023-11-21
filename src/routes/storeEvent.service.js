@@ -1,33 +1,57 @@
 const { model, default: mongoose } = require('mongoose');
 const Event = require('../models/events');
 const errors = require('../../errors/errors');
+const { errorLogger } = require('../../logger/logger');
+
+function isBase64(str) {
+  try {
+    return btoa(atob(str)) == str;
+  } catch (err) {
+    return false;
+  }
+}
 
 module.exports = async (req, res) => {
   try {
-    const { title, description, image, date, location, organizer, attendees, price } = req.body;
+    const { title, description, image, date, location, organizer, attendees, price } = JSON.parse(req.body.toString());
 
-    let decodedImage = null;
+    let selectedImage;
 
-    // Check if image exists in the request body before decoding
     if (image) {
-      // Decode base64 image data
-      decodedImage = Buffer.from(image, 'base64');
+      //split image at comma
+      const splitImage = image.split(',');
+      if (Array.isArray(splitImage)) {
+        selectedImage = splitImage.length === 2 ? splitImage[1] : splitImage[0];
+      } else {
+        selectedImage = image;
+      }
+
+      if (!isBase64(selectedImage)) {
+        return res.status(400).json({
+          statusCode: 1,
+          timestamp: Date.now(),
+          requestId: req.body.requestId,
+          info: {
+            code: errors['003'].code,
+            message: errors['003'].message,
+            displayText: errors['003'].displayText,
+          },
+        });
+      }
     }
 
-    // Create a new Event instance
     const newEvent = new Event({
       _id: new mongoose.Types.ObjectId(),
-      title,
-      description,
-      image: decodedImage, // Use the decoded image data, which can be null if no image is provided
-      date,
-      location,
-      organizer,
-      price,
+      title: title,
+      description: description,
+      image: selectedImage,
+      date: date,
+      location: location,
+      organizer: organizer,
+      price: price,
     });
 
     try {
-      // Save the event to the database
       const savedEvent = await newEvent.save();
 
       return res.status(201).json({
@@ -35,7 +59,13 @@ module.exports = async (req, res) => {
         timestamp: Date.now(),
         requestId: req.body.requestId,
         data: {
-          event: savedEvent,
+          title: savedEvent.title,
+          description: savedEvent.description,
+          image: savedEvent.image,
+          date: savedEvent.date,
+          location: savedEvent.location,
+          organizer: savedEvent.organizer,
+          price: savedEvent.price,
         },
         info: {
           code: errors['000'].code,
@@ -59,6 +89,8 @@ module.exports = async (req, res) => {
       });
     }
   } catch (error) {
+    console.log('Error:', error);
+    errorLogger(req.custom.id, req.body.requestId, `Unexpected error | ${error.message}`, error);
     return res.status(500).json({
       statusCode: 1,
       timestamp: Date.now(),
@@ -72,5 +104,3 @@ module.exports = async (req, res) => {
     });
   }
 };
-
-
