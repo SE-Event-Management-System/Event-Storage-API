@@ -1,0 +1,17 @@
+//Place base64 image here
+
+@image = data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII
+
+POST http://localhost:6001/api/v1/event
+Content-Type: application/json
+
+{
+  "title": "Test3",
+  "description": "This is a test event",
+  //use the image variable here
+  "image": "{{image}}",
+  "date": "2020-12-31",
+  "location": "Test Location",
+  "organizer": "Test Organizer",
+  "price": 100
+}
