@@ -8,7 +8,10 @@ const routeVersioning = require('./src/index');
 const errors = require('./errors/errors');
 const { default: mongoose } = require('mongoose');
 
+app.use(express.raw({ type: 'application/json', limit: '50mb', inflate: true, strict: true }));
+
 app.use(bodyParser.urlencoded({extended: false}));
+
 app.use((req, res, next) => {
     const contentType = req.get('content-type');
     if (!contentType || contentType != 'application/json'){
@@ -25,7 +28,6 @@ app.use((req, res, next) => {
     }
     next();
 })
-app.use(bodyParser.json())
 
 app.use('/api', (req, res, next) => {
     req.custom = {id: v4()}
@@ -34,6 +36,7 @@ app.use('/api', (req, res, next) => {
 
 app.use((err, req, res, next) => {
     if (err){
+        console.log(err)
         return res.status(400).json({
             statusCode: 1,
             timestamp: Date.now(),

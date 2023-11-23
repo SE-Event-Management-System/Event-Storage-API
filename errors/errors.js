@@ -11,6 +11,12 @@ module.exports = {
         displayText: 'Error in inserting key in redis',
         errorType: 'T'
     },
+    '003': {
+        code: '003',
+        message: 'Invalid base64 format for the image. Please provide a valid base64-encoded image.',
+        displayText: 'Invalid base64 format for the image. Please provide a valid base64-encoded image.',
+        errorType: 'B'
+    },
     '002': {
         code: '002',
         message: 'Error while saving in the database',
