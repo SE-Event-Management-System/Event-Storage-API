@@ -16,7 +16,8 @@ Content-Type: application/json
   "maxWaitlist": 10,
   "location": "Test Location",
   "organizer": "Test Organizer",
-  "price": 100
+  "price": 100,
+  "tags": ["Music", "Concert"]
 }
 
 ### Event Storage API Deployed
@@ -29,7 +30,14 @@ Content-Type: application/json
   //use the image variable here
   "image": "{{image}}",
   "date": "2020-12-31",
+  "time": "12:00"
   "location": "Test Location",
   "organizer": "Test Organizer",
-  "price": 100
+  "price": 100,
+  "maxSeats": 100,
+  "maxWaitlist": 10,
+  "location": "Test Location",
+  "organizer": "Test Organizer",
+  "price": 100,
+  "tags": ["Music", "Concert"]
 }

@@ -13,7 +13,7 @@ function isBase64(str) {
 
 module.exports = async (req, res) => {
   try {
-    const { title, description, image, date, time, maxSeats, maxWaitlist, location, organizer, attendees, price } = JSON.parse(req.body.toString());
+    const { title, description, image, date, time, maxSeats, maxWaitlist, location, organizer, attendees, price, tags} = JSON.parse(req.body.toString());
 
     let selectedImage;
 
@@ -52,6 +52,7 @@ module.exports = async (req, res) => {
       location: location,
       organizer: organizer,
       price: price,
+      tags: tags,
     });
 
     try {
@@ -72,6 +73,7 @@ module.exports = async (req, res) => {
           location: savedEvent.location,
           organizer: savedEvent.organizer,
           price: savedEvent.price,
+          tags: savedEvent.tags,
         },
         info: {
           code: errors['000'].code,

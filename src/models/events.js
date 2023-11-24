@@ -53,6 +53,12 @@ const eventSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  tags: [
+    {
+      type: String,
+      required: false,
+    },
+  ],
 }, {
   timestamps: true, // Automatically add 'createdAt' and 'updatedAt' fields
 });
