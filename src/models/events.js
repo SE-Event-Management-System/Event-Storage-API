@@ -18,6 +18,23 @@ const eventSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  time: {
+    type: String,
+    required: true,
+  },
+  maxSeats: {
+    type: Number,
+    required: true,
+  },
+  bookedSeats: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  maxWaitlist: {
+    type: Number,
+    required: true,
+  },
   location: {
     type: String,
     required: true,
