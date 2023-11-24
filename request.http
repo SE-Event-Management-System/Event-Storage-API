@@ -18,3 +18,18 @@ Content-Type: application/json
   "organizer": "Test Organizer",
   "price": 100
 }
+
+### Event Storage API Deployed
+POST https://xfyxc8kgm1.execute-api.us-east-2.amazonaws.com/api/v1/event
+Content-Type: application/json
+
+{
+  "title": "Test3",
+  "description": "This is a test event",
+  //use the image variable here
+  "image": "{{image}}",
+  "date": "2020-12-31",
+  "location": "Test Location",
+  "organizer": "Test Organizer",
+  "price": 100
+}
