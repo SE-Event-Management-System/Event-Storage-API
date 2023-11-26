@@ -1,2 +1,2 @@
-# Generate-OTP-API
-API for generating OTP
+# Event-Storage-API
+API for storing event
