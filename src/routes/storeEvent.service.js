@@ -70,6 +70,8 @@ module.exports = async (req, res) => {
           time: savedEvent.time,
           maxSeats: savedEvent.maxSeats,
           bookedSeats: savedEvent.bookedSeats,
+          maxWaitlist: savedEvent.maxWaitlist,
+          currentWaitlist: savedEvent.currentWaitlist,
           location: savedEvent.location,
           organizer: savedEvent.organizer,
           price: savedEvent.price,

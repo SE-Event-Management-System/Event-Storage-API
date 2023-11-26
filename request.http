@@ -30,7 +30,7 @@ Content-Type: application/json
   //use the image variable here
   "image": "{{image}}",
   "date": "2020-12-31",
-  "time": "12:00"
+  "time": "12:00",
   "location": "Test Location",
   "organizer": "Test Organizer",
   "price": 100,
