@@ -14,12 +14,8 @@ const eventSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  date: {
+  datetime: {
     type: Date,
-    required: true,
-  },
-  time: {
-    type: String,
     required: true,
   },
   maxSeats: {

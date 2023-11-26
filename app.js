@@ -8,7 +8,7 @@ const routeVersioning = require('./src/index');
 const errors = require('./errors/errors');
 const { default: mongoose } = require('mongoose');
 
-app.use(express.raw({ type: 'application/json', limit: '50mb', inflate: true, strict: true }));
+app.use(express.raw({ type: 'application/json', limit: '100mb', inflate: true, strict: true }));
 
 app.use(bodyParser.urlencoded({extended: false}));
 
