@@ -24,18 +24,16 @@ POST https://xfyxc8kgm1.execute-api.us-east-2.amazonaws.com/api/v1/event
 Content-Type: application/json
 
 {
-  "title": "Test",
-  "description": "This is a test event",
+  "title": "IMU Latenite",
+  "description": "IMU Latenite",
   //use the image variable here
   "image": "{{image}}",
-  "datetime": "1700983268248",
-  "location": "Test Location",
-  "organizer": "Test Organizer",
-  "price": 100,
-  "maxSeats": 100,
-  "maxWaitlist": 10,
-  "location": "Test Location",
-  "organizer": "Test Organizer",
-  "price": 100,
-  "tags": ["Music", "Concert"]
+  "datetime": "1701495391692",
+  "location": "Indiana Memorial Union",
+  "organizer": "IU",
+  "price": 0,
+  "maxSeats": 1,
+  "maxWaitlist": 15,
+  "address": "120 S Kingston DR, Indiana, 47408, USA",
+  "tags": ["Counselling", "Student", "Resume"]
 }

@@ -2,6 +2,9 @@ const { model, default: mongoose } = require('mongoose');
 const Event = require('../models/events');
 const errors = require('../../errors/errors');
 const { errorLogger } = require('../../logger/logger');
+var geo = require('mapbox-geocoding');
+geo.setAccessToken('pk.eyJ1IjoicnV0dmlqMTIiLCJhIjoiY2todTk0djgyMGk5YTMwbzNwbGx5a2wzYiJ9.R86nYLWXN1qj-iQC5JNvLQ');
+
 
 function isBase64(str) {
   try {
@@ -13,7 +16,7 @@ function isBase64(str) {
 
 module.exports = async (req, res) => {
   try {
-    const { title, description, image, datetime, maxSeats, maxWaitlist, location, organizer, attendees, price, tags} = JSON.parse(req.body.toString());
+    const { title, description, image, datetime, maxSeats, maxWaitlist, location, organizer, attendees, price, tags, address} = JSON.parse(req.body.toString());
 
     let selectedImage;
 
@@ -40,21 +43,27 @@ module.exports = async (req, res) => {
       }
     }
 
+    try {
+
+    geo.geocode('mapbox.places', location, async function (err, geoData) {
+
     const newEvent = new Event({
       _id: new mongoose.Types.ObjectId(),
       title: title,
       description: description,
       image: selectedImage,
       datetime: new Date(+datetime).toISOString(),
+      address: address,
       maxSeats: maxSeats,
+      lat: geoData.features[0].center[0],
+      long: geoData.features[0].center[1],
       maxWaitlist: maxWaitlist,
-      location: location,
+      location: geoData.features[0].place_name,
       organizer: organizer,
       price: price,
       tags: tags,
     });
 
-    try {
       const savedEvent = await newEvent.save();
 
       return res.status(201).json({
@@ -67,10 +76,11 @@ module.exports = async (req, res) => {
           image: savedEvent.image,
           datetime: savedEvent.datetime,
           maxSeats: savedEvent.maxSeats,
-          bookedSeats: savedEvent.bookedSeats,
+          bookedSeatsArray: savedEvent.bookedSeatsArray,
           maxWaitlist: savedEvent.maxWaitlist,
-          currentWaitlist: savedEvent.currentWaitlist,
+          waitlistArray: savedEvent.waitlistArray,
           location: savedEvent.location,
+          address: savedEvent.address,
           organizer: savedEvent.organizer,
           price: savedEvent.price,
           tags: savedEvent.tags,
@@ -81,6 +91,7 @@ module.exports = async (req, res) => {
           displayText: errors['000'].displayText,
         },
       });
+    })
     } catch (e) {
       errorLogger(req.custom.id, req.body.requestId, `Error while saving user in the database | ${e.message}`, e);
 
