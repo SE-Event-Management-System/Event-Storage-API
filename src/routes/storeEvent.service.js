@@ -45,8 +45,7 @@ module.exports = async (req, res) => {
 
     try {
 
-    geo.geocode('mapbox.places', location, async function (err, geoData) {
-
+    geo.geocode('mapbox.places', address, async function (err, geoData) {
     const newEvent = new Event({
       _id: new mongoose.Types.ObjectId(),
       title: title,
@@ -55,8 +54,8 @@ module.exports = async (req, res) => {
       datetime: new Date(+datetime).toISOString(),
       address: address,
       maxSeats: maxSeats,
-      lat: geoData.features[0].center[0],
-      long: geoData.features[0].center[1],
+      lat: geoData.features[0].center[1],
+      long: geoData.features[0].center[0],
       maxWaitlist: maxWaitlist,
       location: geoData.features[0].place_name,
       organizer: organizer,

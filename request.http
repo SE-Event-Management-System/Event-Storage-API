@@ -6,17 +6,18 @@ POST http://localhost:6001/api/v1/event
 Content-Type: application/json
 
 {
-  "title": "Test3",
-  "description": "This is a test event",
+  "title": "IMU Latenite",
+  "description": "IMU Latenite",
   //use the image variable here
   "image": "{{image}}",
-  "datetime": "1700983268248",
-  "maxSeats": 100,
-  "maxWaitlist": 10,
-  "location": "Test Location",
-  "organizer": "Test Organizer",
-  "price": 100,
-  "tags": ["Music", "Concert"]
+  "datetime": "1701895391692",
+  "location": "Indiana Memorial Union",
+  "organizer": "IU",
+  "price": 0,
+  "maxSeats": 1,
+  "maxWaitlist": 15,
+  "address": "120 S Kingston DR, Indiana, 47408, USA",
+  "tags": ["Counselling", "Student", "Resume"]
 }
 
 ### Event Storage API Deployed
@@ -28,7 +29,7 @@ Content-Type: application/json
   "description": "IMU Latenite",
   //use the image variable here
   "image": "{{image}}",
-  "datetime": "1701495391692",
+  "datetime": "1701895391692",
   "location": "Indiana Memorial Union",
   "organizer": "IU",
   "price": 0,
