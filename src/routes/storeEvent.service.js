@@ -2,7 +2,7 @@ const { model, default: mongoose } = require('mongoose');
 const Event = require('../models/events');
 const errors = require('../../errors/errors');
 const { errorLogger } = require('../../logger/logger');
-var geo = require('mapbox-geocoding');
+const geo = require('mapbox-geocoding');
 geo.setAccessToken('pk.eyJ1IjoicnV0dmlqMTIiLCJhIjoiY2todTk0djgyMGk5YTMwbzNwbGx5a2wzYiJ9.R86nYLWXN1qj-iQC5JNvLQ');
 
 
@@ -16,7 +16,7 @@ function isBase64(str) {
 
 module.exports = async (req, res) => {
   try {
-    const { title, description, image, datetime, maxSeats, maxWaitlist, location, organizer, attendees, price, tags, address} = JSON.parse(req.body.toString());
+    const { title, description, image, datetime, maxSeats, maxWaitlist, location, organizer, attendees, price, tags, address, userId, createdBy, chatId, chatAccessKey} = JSON.parse(req.body.toString());
 
     let selectedImage;
 
@@ -45,7 +45,7 @@ module.exports = async (req, res) => {
 
     try {
 
-    geo.geocode('mapbox.places', address, async function (err, geoData) {
+    geo.geocode('mapbox.places', [location, address].toString(), async function (err, geoData) {
     const newEvent = new Event({
       _id: new mongoose.Types.ObjectId(),
       title: title,
@@ -59,8 +59,11 @@ module.exports = async (req, res) => {
       maxWaitlist: maxWaitlist,
       location: geoData.features[0].place_name,
       organizer: organizer,
+      chatId: chatId,
+      chatAccessKey: chatAccessKey,
       price: price,
       tags: tags,
+      createdBy: createdBy
     });
 
       const savedEvent = await newEvent.save();
@@ -82,7 +85,10 @@ module.exports = async (req, res) => {
           address: savedEvent.address,
           organizer: savedEvent.organizer,
           price: savedEvent.price,
+          chatId: chatId,
+          chatAccessKey: chatAccessKey,
           tags: savedEvent.tags,
+          createdBy: savedEvent.createdBy
         },
         info: {
           code: errors['000'].code,

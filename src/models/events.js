@@ -56,12 +56,24 @@ const eventSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  chatId: String,
+  chatAccessKey: String,
   tags: [
     {
       type: String,
       required: false,
     },
   ],
+  comments:[
+		{
+			type:mongoose.Schema.Types.ObjectId,
+			ref:"Comment"
+		}
+	]
 }, {
   timestamps: true, // Automatically add 'createdAt' and 'updatedAt' fields
 });
